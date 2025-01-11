@@ -87,7 +87,7 @@ if st.session_state.problem_solve:
     mode_list = ["python", "c", "c++"]
     language = st.selectbox("lang:", mode_list, index=mode_list.index("python"))
     my_code = ''
-    if st.session_state.submit == {}:
+    if st.session_state.submit is None:
         response_dict = code_editor(my_code, lang=language if language == "python" else "c_cpp", focus=True, height="500px",
                                     buttons=custom_btn)
 
@@ -107,7 +107,7 @@ if st.session_state.problem_solve:
     else:
         if st.session_state.submit is not None and st.session_state.submit.status_code == 200:
             st.write(st.session_state["submit"].json())
-            st.session_state.submit = {}
+            st.session_state.submit = None
         else:
             st.rerun()
 
