@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 import requests
+from requests import Response
 from code_editor import code_editor
 
 API_URL = "http://210.115.227.15:8000"
@@ -16,7 +17,7 @@ if "selected_option" not in st.session_state:
 if "problem_solve" not in st.session_state:
     st.session_state.problem_solve = False
 if "submit" not in st.session_state:
-    st.session_state.submit = {}
+    st.session_state["submit"] = None
 
 if "problem_id" not in st.query_params:
     st.query_params["problem_id"] = 0
@@ -101,11 +102,14 @@ if st.session_state.problem_solve:
                 "submitted_code": response_dict["text"],
                 "code_language": language
             }
-            st.session_state.submit = requests.post(f"{API_URL}/api/solves", json=solve_request_form)
+            st.session_state["submit"]: Response = requests.post(f"{API_URL}/api/solves", json=solve_request_form)
             st.rerun()
     else:
-        st.write(st.session_state.submit.json())
-        st.session_state.submit = {}
+        if st.session_state["submit"].status_code == 200:
+            st.write(st.session_state["submit"].json())
+            st.session_state.submit = {}
+        else:
+            st.rerun()
 
 
 elif int(st.query_params.problem_id):
