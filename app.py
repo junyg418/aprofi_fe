@@ -44,8 +44,7 @@ if st.session_state.token is None:
             if response.status_code == 200:
                 st.success("User Login successful")
                 st.session_state.token = response.json()["access_token"]
-                st.experimental_rerun()
-                print(st.session_state.token)
+                st.rerun()
             else:
                 st.error("failed")
 
