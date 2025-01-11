@@ -1,13 +1,14 @@
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000"
-token = None
+API_URL = "http://210.115.227.15:8000"
+if "token" not in st.session_state:
+    st.session_state.token = None
 
 st.title('Aprofi test')
 
 
-if token is None:
+if st.session_state.token is None:
     menu = st.sidebar.selectbox("Menu", ["Register", "Login", "Problem"])
     if menu == "Register":
         st.subheader("Register")
@@ -42,12 +43,24 @@ if token is None:
             response = requests.post(f"{API_URL}/user/login", json=data)
             if response.status_code == 200:
                 st.success("User Login successful")
-                token = response.json()["access_token"]
-                print(token)
+                st.session_state.token = response.json()["access_token"]
+                st.experimental_rerun()
+                print(st.session_state.token)
             else:
                 st.error("failed")
 
-# Login 상태
-else:
-    menu = st.sidebar.selectbox("Menu", ["My Page", "Problem"])
+    elif menu == "Problem":
+        pass
 
+
+# Login 상태
+if st.session_state.token:
+    menu = st.sidebar.selectbox("Menu", ["MyPage", "Problem"])
+    if menu == "MyPage":
+        request_header = {
+            "Authorization": f"Bearer {st.session_state.token}"
+        }
+        user_info = requests.get(f"{API_URL}/user/me/items", headers=request_header)
+        print(repr(user_info))
+    elif menu == "Problem":
+        pass
