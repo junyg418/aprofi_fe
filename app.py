@@ -7,8 +7,8 @@ from code_editor import code_editor
 API_URL = "http://210.115.227.15:8000"
 # API_URL = "http://127.0.0.1:8000"
 
-st.set_option('client.showErrorDetails', True)
-st.set_option('client.toolbarMode', True)
+# st.set_option('client.showErrorDetails', True)
+# st.set_option('client.toolbarMode', True)
 
 if "token" not in st.session_state:
     st.session_state.token = None
