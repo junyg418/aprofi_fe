@@ -3,8 +3,8 @@ import json
 import requests
 from code_editor import code_editor
 
-# API_URL = "http://210.115.227.15:8000"
-API_URL = "http://127.0.0.1:8000"
+API_URL = "http://210.115.227.15:8000"
+# API_URL = "http://127.0.0.1:8000"
 if "token" not in st.session_state:
     st.session_state.token = None
 if "selected_option" not in st.session_state:
