@@ -105,7 +105,7 @@ if st.session_state.problem_solve:
             st.session_state["submit"]: Response = requests.post(f"{API_URL}/api/solves", json=solve_request_form)
             st.rerun()
     else:
-        if st.session_state["submit"].status_code == 200:
+        if st.session_state.submit.status_code == 200:
             st.write(st.session_state["submit"].json())
             st.session_state.submit = {}
         else:
