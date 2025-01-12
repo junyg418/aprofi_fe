@@ -94,7 +94,7 @@ if st.session_state.problem_solve:
             "style": {"top": "0.46rem", "right": "0.4rem"}
         },
     ]
-    mode_list = ["python", "c", "c++"]
+    mode_list = ["python", "C", "C++"]
     language = st.selectbox("lang:", mode_list, index=mode_list.index("python"))
     my_code = ''
 
